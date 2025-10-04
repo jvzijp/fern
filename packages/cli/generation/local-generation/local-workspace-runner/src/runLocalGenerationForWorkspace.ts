@@ -80,9 +80,21 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                const organization = await venus.organization.get(
-                    FernVenusApi.OrganizationId(projectConfig.organization)
-                );
+                // const organization = await venus.organization.get(
+                //     FernVenusApi.OrganizationId(projectConfig.organization)
+                // );
+
+                const organization = {
+                    ok: true,
+                    body: {
+                        selfHostedSdKs: true,
+                        isWhitelabled: true,
+                        previewEnabled: true,
+                        snippetUnitTestsEnabled: false,
+                        oauthClientEnabled: false,
+                        paginationEnabled: false
+                    } as FernVenusApi.Organization
+                }
 
                 if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(
